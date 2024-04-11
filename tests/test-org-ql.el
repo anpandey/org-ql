@@ -2304,7 +2304,13 @@ with keyword arg NOW in PLIST."
 
     ;; MAYBE: Also test `org-ql-views', although I already know it works now.
     ;; (describe "org-ql-views")
-    ))
+    )
+  (describe "Agenda views"
+
+            (it "Agenda properties for formatted element"
+                (expect (length (org-ql-select org-ql-test-buffer nil))
+                        :to-equal org-ql-test-num-headings)))
+  )
 
 ;; Local Variables:
 ;; truncate-lines: t
