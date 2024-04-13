@@ -176,6 +176,15 @@ with keyword arg NOW in PLIST."
                                       (cl-loop while (re-search-forward org-heading-regexp nil t)
                                                sum 1)))))
 
+  (describe "Agenda"
+
+            (it "Sets effort properties formatted element"
+                (let* ((element (car (org-ql-select org-ql-test-buffer '(effort 30))))
+                       (item (org-ql-view--format-element element))
+                       (txt (get-text-property 0 'txt item)))
+                  (expect (get-text-property 0 'effort-minutes txt) :to-equal 30.0)
+                  (expect (get-text-property 0 'effort txt) :to-equal "30"))))
+
   (describe "Caching"
 
     (it "Clears value cache after buffer changes"
@@ -2305,11 +2314,6 @@ with keyword arg NOW in PLIST."
     ;; MAYBE: Also test `org-ql-views', although I already know it works now.
     ;; (describe "org-ql-views")
     )
-  (describe "Agenda views"
-
-            (it "Agenda properties for formatted element"
-                (expect (length (org-ql-select org-ql-test-buffer nil))
-                        :to-equal org-ql-test-num-headings)))
   )
 
 ;; Local Variables:
